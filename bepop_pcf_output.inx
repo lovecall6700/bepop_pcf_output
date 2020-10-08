@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Bepopシンボルファイル出力</_name>
+  <id>jp.atjp.apps.z.bepop.pcf</id>
+  <param name="d0" type="description" appearance="header">Version 2018-8-10</param>
+  <param name="d2" type="description">オブジェクトはすべてパスに変換しておいてください。</param>
+  <param name="d3" type="description">C:\MAX\BepopPC EX\Symbol\#MySymbols</param>
+  <param name="d4" type="description">に直接保存できない場合は別途保存後コピーしてください。</param>
+  <param name="curlayer" type="boolean" _gui-text="現在のレイヤーのみ">true</param>
+  <param name="resize" type="boolean" _gui-text="サイズ変換を行う(10cm)">true</param>
+  <output>
+    <extension>.pcf</extension>
+    <mimetype>image/pcf</mimetype>
+    <_filetypename>MAX Bepopシンボル (*.pcf)</_filetypename>
+  </output>
+    <script>
+        <command reldir="extensions" interpreter="python">bepop_pcf_output.py</command>
+    </script>
+</inkscape-extension>
