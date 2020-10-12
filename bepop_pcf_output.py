@@ -6,7 +6,7 @@ import inkex
 from inkex.transforms import Transform
 from inkex import paths
 
-class BepopPcfOutput(inkex.Effect):
+class BepopPcfOutput(inkex.OutputExtension):
     def __init__(self):
         super(BepopPcfOutput, self).__init__()
         self.arg_parser.add_argument('--myparam',
@@ -21,7 +21,7 @@ class BepopPcfOutput(inkex.Effect):
         pass
     def effect(self):
         pass
-    def save_raw(self, ret):
+    def save(self, stream):
         self.dmesg('output')
         layer= self.document
         if self.options.curlayer:
@@ -78,13 +78,13 @@ class BepopPcfOutput(inkex.Effect):
         if sys.platform == "win32":
             import os, msvcrt
             msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
-        sys.stdout.buffer.write(b'Bepop PictSign'+b'\x00'*50)
-        sys.stdout.buffer.write(b'Ver.0.00'+b'\x00'*8)
-        sys.stdout.buffer.write(struct.pack('<ii', int((box[1]-box[0])*mag+ofs), int((box[3]-box[2])*mag+ofs))) 
-        sys.stdout.buffer.write(b'\x00'*168)
-        sys.stdout.buffer.write(struct.pack('<i', len(data)//9))
-        sys.stdout.buffer.write(data)
-        sys.stdout.flush()
+        stream.write(b'Bepop PictSign'+b'\x00'*50)
+        stream.write(b'Ver.0.00'+b'\x00'*8)
+        stream.write(struct.pack('<ii', int((box[1]-box[0])*mag+ofs), int((box[3]-box[2])*mag+ofs))) 
+        stream.write(b'\x00'*168)
+        stream.write(struct.pack('<i', len(data)//9))
+        stream.write(data)
+        stream.flush()
 
 if __name__ == '__main__':
     e=BepopPcfOutput()
