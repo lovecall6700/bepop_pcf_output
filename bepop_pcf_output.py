@@ -29,7 +29,7 @@ class BepopPcfOutput(inkex.OutputExtension):
         #calculate bounding box first: determine line/curve/point after conveted to integer
         box= None
         for node in layer.xpath('.//svg:path', namespaces=inkex.NSS):
-            m = (node.transform * Transform([[1.0,0.0,0.0],[0.0,1.0,0.0]])).matrix
+            m = (node.transform @ Transform([[1.0,0.0,0.0],[0.0,1.0,0.0]])).matrix
             path = paths.CubicSuperPath(paths.Path(node.get('d')))
             paths.Path(path).transform(Transform(m)).to_arrays()
             bbox = paths.Path(path).bounding_box()
@@ -45,7 +45,7 @@ class BepopPcfOutput(inkex.OutputExtension):
         data= b''
         for node in layer.xpath('.//svg:path', namespaces=inkex.NSS):
             self.dmesg('node')
-            m = (node.transform * Transform([[1.0,0.0,0.0],[0.0,1.0,0.0]])).matrix
+            m = (node.transform @ Transform([[1.0,0.0,0.0],[0.0,1.0,0.0]])).matrix
             path = paths.CubicSuperPath(paths.Path(node.get('d')))
             paths.Path(path).transform(Transform(m)).to_arrays()
             for elem in path:
